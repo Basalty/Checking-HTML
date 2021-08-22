@@ -1,0 +1,49 @@
+"""
+Created on Mon Oct 26 11:06:45 2020
+
+@author: Tashina Taylor
+"""
+import re
+
+
+  # The 'rules' for checking valid HTML are as follows:
+    # Opening tags are of the form <tag_name>
+    # Closing tags are of the form </tag_name>
+    # Every opening tag must be followed by zero or more matching opening and closing tag pairs or a matching closing tag.
+    # There must be an equal number of opening and closing tags
+    # There can be text at any point outside of the tags
+    # Every opening tag needs to have a matching closing tag and tags can be nested.
+    
+# Example set of HTML code for checking
+example_Set = ['''<a><b><c></c></b></a>''',
+ '''<foo>asd<bar>alksjd</bar><p>asldkj</p></foo>''', 
+ '''<foo><bar></bop></bar></foo>''',
+ '''<foo><bar></bar></foo></foo>''',
+ '''<foo><bar></foo></bar>''']
+
+newExample = []
+
+
+def is_Valid(string): 
+    tags = re.findall(r'<.*?>', string) 
+    i=0
+    while len(tags)>0: 
+        if tags[i][1] == '/': 
+            if i==0:
+                return False
+            tags[i] = tags[i][0]+tags[i][2:] 
+            if tags[i] == tags[i-1]: 
+                tags = tags[0:i-1]+tags[i+1:]
+                i=i-1
+                
+            else:
+                return False
+        else:
+            i=i+1
+    return True
+                
+
+for string in example_set:
+    newExample.append((string, is_valid(string)))
+print(newExample)
+
