@@ -27,7 +27,7 @@ newExample = []
 def is_Valid(string): 
     tags = re.findall(r'<.*?>', string) 
     i=0
-    while len(tags)>0: 
+    while i < len(tags): 
         if tags[i][1] == '/': 
             if i==0:
                 return False
@@ -40,10 +40,10 @@ def is_Valid(string):
                 return False
         else:
             i=i+1
-    return True
+    return len(tags) == 0
                 
 
-for string in example_set:
-    newExample.append((string, is_valid(string)))
+for string in example_Set:
+    newExample.append((string, is_Valid(string)))
 print(newExample)
 
